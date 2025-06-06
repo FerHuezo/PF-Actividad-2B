@@ -1,47 +1,70 @@
-import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-const Modal = ({ closeModal }) => {
+const UserFormModal = ({ onClose, onSubmit, defaultValues = {}, isEditing }) => {
+  const { register, handleSubmit, reset } = useForm();
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
+
+  const submitForm = (data) => {
+    onSubmit(data);
+    onClose();
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
-    >
-      <motion.div
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full"
-      >
-        <h2 className="text-xl font-bold mb-4">Agregar Usuario</h2>
-        <form>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          {isEditing ? "Editar Usuario" : "Agregar Usuario"}
+        </h2>
+
+        <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
           <input
-            type="text"
-            placeholder="Nombre"
-            className="w-full border rounded px-3 py-2 mb-2"
+            {...register("curso")}
+            placeholder="Nombre del Curso"
+            className="w-full p-2 border border-gray-300 rounded"
+            required
           />
           <input
-            type="email"
-            placeholder="Correo"
-            className="w-full border rounded px-3 py-2 mb-2"
+            {...register("tematica")}
+            placeholder="Temática"
+            className="w-full p-2 border border-gray-300 rounded"
+            required
           />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400 transition-colors w-full"
-          >
-            Guardar
-          </button>
+          <input
+            {...register("instructor")}
+            placeholder="Instructor"
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+          <textarea
+            {...register("descripcion")}
+            placeholder="Descripción"
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+
+          <div className="flex justify-end gap-2 mt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 transition"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-400 transition"
+            >
+              {isEditing ? "Actualizar" : "Agregar"}
+            </button>
+          </div>
         </form>
-        <button
-          onClick={closeModal}
-          className="mt-4 text-red-500 hover:underline"
-        >
-          Cancelar
-        </button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
-export default Modal;
+export default UserFormModal;
