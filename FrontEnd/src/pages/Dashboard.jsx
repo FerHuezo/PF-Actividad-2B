@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import Titulo from "../components/Titulos.jsx";
 import UserTable from "../components/UserTable";
 import useDataCourses from "../hooks/Courses/useDataCourses";
@@ -39,8 +39,7 @@ const Home = () => {
   };
 
   const handleLogout = () => {
-    // Aquí puedes manejar cualquier lógica adicional antes de redirigir
-    navigate(-1); // Redirige al usuario a la ruta anterior
+    navigate(-1);
   };
 
   return (
@@ -48,24 +47,26 @@ const Home = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+      className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6"
     >
       <Titulo titulo="Gestión de Usuarios" />
 
-      <div className="mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-6 gap-4">
         <button
           onClick={handleAdd}
-          className="text-xl font-bold text-white bg-green-600 px-6 py-3 rounded-lg hover:bg-green-500 transition-colors shadow-lg"
+          className="text-base sm:text-lg font-semibold text-white bg-green-600 px-5 py-3 rounded-md hover:bg-green-500 transition-colors shadow-md"
         >
           + Agregar usuario
         </button>
       </div>
 
-      <UserTable
-        users={dataCourses}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      <div className="overflow-x-auto">
+        <UserTable
+          users={dataCourses}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      </div>
 
       {isModalOpen && (
         <UserFormModal
@@ -77,7 +78,7 @@ const Home = () => {
       )}
 
       <div className="mt-8">
-        <ButtonDelete text="Cerrar Sesión" onClick={handleLogout}/>
+        <ButtonDelete text="Cerrar Sesión" onClick={handleLogout} />
       </div>
     </motion.div>
   );

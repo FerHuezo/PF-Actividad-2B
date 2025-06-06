@@ -13,7 +13,13 @@ const UserRow = ({ user, onEdit, onDelete }) => {
       <td className="px-4 py-2 font-medium">{user.curso}</td>
       <td className="px-4 py-2">{user.tematica}</td>
       <td className="px-4 py-2">{user.instructor}</td>
-      <td className="px-4 py-2">{user.descripcion}</td>
+
+      <td className="px-4 py-2 max-w-xs">
+        <div className="line-clamp-3 overflow-x-auto whitespace-nowrap">
+          {user.descripcion}
+        </div>
+      </td>
+
       <td className="px-4 py-2 flex gap-2">
         <Button text="Editar" onClick={() => onEdit(user)} />
         <ButtonDelete text="Eliminar" onClick={() => onDelete(user.id)} />

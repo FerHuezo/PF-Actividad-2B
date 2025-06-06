@@ -9,13 +9,18 @@ const UserTable = ({ users, onEdit, onDelete }) => {
             <th className="px-4 py-2 border-b">Nombre</th>
             <th className="px-4 py-2 border-b">Temática</th>
             <th className="px-4 py-2 border-b">Instructor</th>
-            <th className="px-4 py-2 border-b">Descripción</th>
+            <th className="px-4 py-2 border-b max-w-xs">Descripción</th>
             <th className="px-4 py-2 border-b">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {users?.map((user) => (
-            <UserRow key={user.id} user={user} onEdit={onEdit} onDelete={onDelete} />
+            <UserRow
+              key={user.id}
+              user={user}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           ))}
         </tbody>
       </table>
